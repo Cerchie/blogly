@@ -19,26 +19,33 @@ connect_db(app)
 db.create_all()
 
 
-@app.route("/")
+@app.route("/", methods=['GET'])
+def rd():
+    """redirect to user page"""
+    return redirect("/users")
+
+
+@app.route("/users", methods=['GET'])
 def list_users():
     """List users and show add form."""
-
     users = User.query.all()
-    user = User.query.get_or_404(user_id)
     return render_template("list.html", users=users)
 
 
-@app.route("/add-user")
+@app.route("/users/new", methods=['POST', 'GET'])
 def add_user():
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    image_url = request.form['image_url']
+
+    new_user = User(
+        first_name=request.form['first_name'],
+        last_name=request.form['last_name'],
+        image_url=request.form['image_url'])
     users = User.query.all()
+
     user = User(first_name=first_name,
                 last_name=last_name, image_url=image_url)
     db.session.add(user)
     db.session.commit()
-    return render_template("add-user.html", users=users)
+    return redirect(f"/users")
 
 
 # @app.route("/display-user-added", methods=['GET', 'POST'])
