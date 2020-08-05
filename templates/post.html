@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+Title {{post.title}}
+Content {{post.content}}
+<form action="/posts/{{post.id}}/delete" <button type="submit">Delete</button> </form>
+{% endblock %}

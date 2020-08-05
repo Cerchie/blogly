@@ -104,7 +104,7 @@ def show_form(user_id):
     return render_template("new-post.html", user=user)
 
 @app.route("/<int:user_id>/posts/new", methods=["POST"])
-def add_post():
+def add_post(user_id):
     """Handle add form; add post and redirect to the user detail page"""
     new_post = Post(
         title=request.form['title'] or None,
@@ -114,3 +114,35 @@ def add_post():
     db.session.commit()
 
     return redirect("/<int:user_id>")
+
+
+@app.route("/posts/<int:post_id>")
+def show_post():
+    """Show a post. Show buttons to edit and delete the post."""
+    return render_template(post.html)
+
+
+@app.route("/posts/<int:post_id>/delete")
+def delete_post(post_id):
+    """Show info on a single user."""
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect("/posts")
+
+@app.route("/posts/<int:post_id>/edit")
+def edit():
+        """Show form to edit a post, and to cancel (back to user page)."""
+        return render_template("edit-post.html")
+
+@app.route("/posts/<int:post_id>/edit", methods=["POST"])
+def edit_form():
+    """Handle editing of a post. Redirect back to the post view."""
+    post = Post.query.get_or_404(post_id)
+    title = request.form('title')
+    content = request.form('content')
+    db.session.add(post)
+    db.session.add(title)
+    db.session.add(content)
+    db.session.commit()
+    return redirect("/posts")
