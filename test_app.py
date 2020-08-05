@@ -41,7 +41,7 @@ class UserViewsTestCase(TestCase):
             resp = client.get("/")
             html = resp.get_data(as_text=True)
 
-            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.status_code, 302)
             self.assertIn('Users', html)
 
     def test_delete(self):
