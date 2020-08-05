@@ -25,26 +25,26 @@ def rd():
     return redirect("/users")
 
 
-@app.route("/users", methods=['GET', 'POST'])
+@app.route("/users", methods=['GET'])
 def list_users():
     """List users and show add form."""
     users = User.query.all()
     return render_template("list.html", users=users)
 
 
-@app.route("/users/new", methods=["POST"])
-def users_new():
-    """Handle form submission for creating a new user"""
+@app.route("/users/new", methods=['POST', 'GET'])
+def add_user():
+    """add user and redirect to list"""
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    image_url = request.form['image_url']
 
-    new_user = User(
-        first_name=request.form['first_name'],
-        last_name=request.form['last_name'],
-        image_url=request.form['image_url'] or None)
-
-    db.session.add(new_user)
+    user = User(first_name=first_name,
+                last_name=last_name, image_url=image_url)
+    db.session.add(user)
     db.session.commit()
 
-    return redirect("/users")
+    return redirect(f"/users")
 
 
 # @app.route("/display-user-added", methods=['GET', 'POST'])
@@ -53,7 +53,7 @@ def users_new():
 #     user = User.query.get_or_404(first_name)
 #     return render_template("/display-user-added.html", users=users, user=user)
 
-@app.route("/users/<int:user_id>")
+@app.route("/<int:user_id>")
 def show_user(user_id):
     """Show info on a single user."""
     user = User.query.get_or_404(user_id)
