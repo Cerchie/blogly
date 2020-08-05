@@ -106,15 +106,16 @@ def show_form(user_id):
 @app.route("/<int:user_id>/posts/new", methods=["POST"])
 def add_post(user_id):
     """Handle add form; add post and redirect to the user detail page"""
-    new_post = Post(
+    user = User.query.get_or_404(user_id)
+    post = Post(
         title=request.form['title'] or None,
         content=request.form['content'],
         user_id=user_id)
        
-    db.session.add(new_post)
+    db.session.add(post)
     db.session.commit()
 
-    return redirect("/<int:user_id>")
+    return render_template("detail.html", user=user)
 
 
 @app.route("/posts/<int:post_id>")
