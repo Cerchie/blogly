@@ -118,10 +118,11 @@ def add_post(user_id):
     return render_template("detail.html", user=user)
 
 
-@app.route("/posts/<int:post_id>")
+@app.route("/<int:post_id>")
 def show_post():
     """Show a post. Show buttons to edit and delete the post."""
-    return render_template(post.html)
+    posts = Post.query.all()
+    return render_template("post.html", posts=posts)
 
 
 @app.route("/posts/<int:post_id>/delete")
