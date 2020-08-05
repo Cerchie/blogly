@@ -1,7 +1,7 @@
 """Blogly application."""
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import Flask, request, redirect, render_template, flash, session
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -96,3 +96,21 @@ def delete(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect(f"/users")
+
+@app.route("/<int:user_id>/posts/new", methods=["GET"])
+def show_form(user_id):
+    """show form for adding post"""
+    user = User.query.get_or_404(user_id)
+    return render_template("new-post.html", user=user)
+
+@app.route("/<int:user_id>/posts/new", methods=["POST"])
+def add_post():
+    """Handle add form; add post and redirect to the user detail page"""
+    new_post = Post(
+        title=request.form['title'] or None,
+        content=request.form['content'])
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect("/<int:user_id>")

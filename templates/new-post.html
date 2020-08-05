@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Add Post for {{user.first_name}}</h2>
+<form method="POST">
+    <p>Title <input name="title"></p>
+    <p>Content: <input name="content"></p>
+    <input type="submit">
+</form>
+<a href="/users">Cancel</a>
+<button type="submit"></button>
+{% endblock%}
