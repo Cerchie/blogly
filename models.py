@@ -32,6 +32,8 @@ class User (db.Model):
                           unique=True)
     image_url = db.Column(db.String, nullable=True, unique=True)
 
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+
 class Post (db.Model):
     """Post."""
 
