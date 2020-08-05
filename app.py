@@ -32,19 +32,26 @@ def list_users():
     return render_template("list.html", users=users)
 
 
-@app.route("/users/new", methods=['POST', 'GET'])
-def add_user():
-    """add user and redirect to list"""
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    image_url = request.form['image_url']
+@app.route('/users/new', methods=["GET"])
+def users_new_form():
+    """Show a form to create a new user"""
 
-    user = User(first_name=first_name,
-                last_name=last_name, image_url=image_url)
-    db.session.add(user)
+    return render_template('add-user.html')
+
+
+@app.route("/users/new", methods=["POST"])
+def users_new():
+    """Handle form submission for creating a new user"""
+
+    new_user = User(
+        first_name=request.form['first_name'] or None,
+        last_name=request.form['last_name'],
+        image_url=request.form['image_url'])
+
+    db.session.add(new_user)
     db.session.commit()
 
-    return redirect(f"/users")
+    return redirect("/users")
 
 
 # @app.route("/display-user-added", methods=['GET', 'POST'])
