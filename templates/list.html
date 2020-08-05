@@ -1,30 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-{% block html_head %}
+{% extends "layout.html" %}
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
 </head>
-{% endblock %}
 
-<body>
-    <form>
-        <h1>Users</h1>
-        <ul>
-            {% for user in users %}
-            <li><a href="/{{ user.id }}">{{ user.first_name }}</a></li>
-            {% endfor %}
-        </ul>
-        <h2>Add User</h2>
-        <form method="POST">
-            <p>First Name: <input name="first_name"></p>
-            <p>Last Name: <input name="last_name"></p>
-            <p>Image URL: <input name="image_url"></p>
-        </form>
-        <a href="/users/new">Add User</a>
+{% block content %}
+<form>
+    <h1>Users</h1>
+    <ul>
+        {% for user in users %}
+        <li><a href="/{{ user.id }}">{{ user.first_name }}</a></li>
+        {% endfor %}
+    </ul>
+    <h2>Add User</h2>
+    <form method="POST">
+        <p>First Name: <input name="first_name"></p>
+        <p>Last Name: <input name="last_name"></p>
+        <p>Image URL: <input name="image_url"></p>
     </form>
-</body>
-
-</html>
+    <a href="/users/new">Add User</a>
+</form>
+{% endblock %}

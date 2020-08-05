@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
 <head>
     <meta charset="UTF-8">
@@ -7,14 +6,15 @@
     <title>Add User</title>
 </head>
 
-<body>
-    <h2>Add User</h2>
-    <form method="POST" action="/{{ user.id }}">
-        <p>First Name: <input name="first_name"></p>
-        <p>Last Name: <input name="last_name"></p>
-        <p>Image URL: <input name="image_url"></p>
-        <a href="/users"> Submit </a>
-    </form>
-</body>
+{% block content %}
 
-</html>
+
+<h2>Add User</h2>
+<form method="POST" action="/{{ user.id }}">
+    <p>First Name: <input name="first_name"></p>
+    <p>Last Name: <input name="last_name"></p>
+    <p>Image URL: <input name="image_url"></p>
+    <a href="/users"> Submit </a>
+</form>
+
+{% endblock %}

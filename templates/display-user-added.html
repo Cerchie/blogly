@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
 <head>
     <meta charset="UTF-8">
@@ -7,8 +6,7 @@
     <title>New User</title>
 </head>
 
-<body>
-    You have created {{user.first_name}} {{user.last_name}}
-</body>
+{% block content %}
+You have created {{user.first_name}} {{user.last_name}}
 
-</html>
+{% endblock%}
