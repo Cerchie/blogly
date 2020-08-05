@@ -108,8 +108,9 @@ def add_post(user_id):
     """Handle add form; add post and redirect to the user detail page"""
     new_post = Post(
         title=request.form['title'] or None,
-        content=request.form['content'])
-
+        content=request.form['content'],
+        user_id=request.form['user_id'])
+       
     db.session.add(new_post)
     db.session.commit()
 
