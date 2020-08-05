@@ -58,3 +58,35 @@ def show_user(user_id):
     """Show info on a single user."""
     user = User.query.get_or_404(user_id)
     return render_template("detail.html", user=user)
+
+
+@app.route("/<int:user_id>/edit")
+def show_editpage(user_id):
+    """Show info on a single user."""
+    user = User.query.get_or_404(user_id)
+    return render_template("edit.html", user=user)
+
+
+@app.route('/<int:user_id>/edit', methods=["POST"])
+def users_update(user_id):
+    """Handle form submission for updating an existing user"""
+
+    user = User.query.get_or_404(user_id)
+    user.first_name = request.form['first_name']
+    user.last_name = request.form['last_name']
+    user.image_url = request.form['image_url']
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect("/users")
+
+
+@app.route("/<int:user_id>/delete")
+def delete():
+    """Show info on a single user."""
+    user = User(first_name=first_name,
+                last_name=last_name, image_url=image_url)
+    db.session.delete()
+    db.session.commit()
+    return redirect(f"/users")
