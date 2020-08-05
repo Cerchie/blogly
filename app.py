@@ -83,10 +83,9 @@ def users_update(user_id):
 
 
 @app.route("/<int:user_id>/delete")
-def delete():
+def delete(user_id):
     """Show info on a single user."""
-    user = User(first_name=first_name,
-                last_name=last_name, image_url=image_url)
-    db.session.delete()
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
     db.session.commit()
     return redirect(f"/users")
