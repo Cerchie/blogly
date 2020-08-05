@@ -64,7 +64,8 @@ def users_new():
 def show_user(user_id):
     """Show info on a single user."""
     user = User.query.get_or_404(user_id)
-    return render_template("detail.html", user=user)
+    posts = Post.query.get(user_id)
+    return render_template("detail.html", user=user, posts = posts)
 
 
 @app.route("/<int:user_id>/edit")
@@ -121,8 +122,8 @@ def add_post(user_id):
 @app.route("/<int:post_id>")
 def show_post():
     """Show a post. Show buttons to edit and delete the post."""
-    posts = Post.query.all()
-    return render_template("post.html", posts=posts)
+    
+    return render_template("post.html")
 
 
 @app.route("/posts/<int:post_id>/delete")
