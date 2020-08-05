@@ -133,10 +133,10 @@ def posts_new(user_id):
 
     return redirect(f"/users")
 
-@app.route("/<int:post_id>")
-def show_post():
+@app.route("/posts/<int:post_id>")
+def show_post(post_id):
     """Show a post. Show buttons to edit and delete the post."""
-    
+    post = Post.query.get_or_404(post_id)
     return render_template("post.html")
 
 
