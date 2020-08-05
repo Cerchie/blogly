@@ -64,7 +64,7 @@ def users_new():
 def show_user(user_id):
     """Show info on a single user."""
     user = User.query.get_or_404(user_id)
-    posts = Post.filter_by(user_id)
+    posts = Post.query.filter(user.id == user_id).all()
     return render_template("detail.html", user=user, posts = posts)
 
 
@@ -104,20 +104,34 @@ def show_form(user_id):
     user = User.query.get_or_404(user_id)
     return render_template("new-post.html", user=user)
 
-@app.route("/<int:user_id>/posts/new", methods=["POST"])
-def add_post(user_id):
-    """Handle add form; add post and redirect to the user detail page"""
-    user = User.query.get_or_404(user_id)
-    post = Post(
-        title=request.form['title'] or None,
-        content=request.form['content'],
-        user_id=user_id)
+# @app.route("/<int:user_id>/posts/new", methods=["POST"])
+# def add_post(user_id):
+#     """Handle add form; add post and redirect to the user detail page"""
+#     user = User.query.get_or_404(user_id)
+#     post = Post(
+#         title=request.form['title'] or None,
+#         content=request.form['content'],
+#         user_id=user_id)
        
-    db.session.add(post)
+#     db.session.add(post)
+#     db.session.commit()
+
+#     return render_template("detail.html", user=user, title=title)
+
+@app.route('/<int:user_id>/posts/new', methods=["POST"])
+def posts_new(user_id):
+    """Handle form submission for creating a new post for a specific user"""
+
+    user = User.query.get_or_404(user_id)
+    new_post = Post(title=request.form['title'],
+                    content=request.form['content'],
+                    user=user)
+
+    db.session.add(new_post)
     db.session.commit()
+    flash(f"Post '{new_post.title}' added.")
 
-    return render_template("detail.html", user=user)
-
+    return redirect(f"/users")
 
 @app.route("/<int:post_id>")
 def show_post():

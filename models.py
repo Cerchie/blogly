@@ -25,12 +25,10 @@ class User (db.Model):
                    primary_key=True,
                    autoincrement=True)
     first_name = db.Column(db.String(50),
-                           nullable=False,
-                           unique=True)
+                           nullable=False)
     last_name = db.Column(db.String(50),
-                          nullable=False,
-                          unique=True)
-    image_url = db.Column(db.String, nullable=True, unique=True)
+                          nullable=False)
+    image_url = db.Column(db.String, nullable=True)
 
     posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
 
