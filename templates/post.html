@@ -3,5 +3,5 @@
 {% block content %}
 Title {{post.title}}
 Content {{post.content}}
-<form action="/posts/{{post.id}}/delete" <button type="submit">Delete</button> </form>
+<p><a href="/posts/{{post.id}}/delete">Delete Post</a></p>
 {% endblock %}

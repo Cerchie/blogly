@@ -137,16 +137,17 @@ def posts_new(user_id):
 def show_post(post_id):
     """Show a post. Show buttons to edit and delete the post."""
     post = Post.query.get_or_404(post_id)
-    return render_template("post.html")
+    return render_template("post.html", post=post)
 
 
 @app.route("/posts/<int:post_id>/delete")
 def delete_post(post_id):
-    """Show info on a single user."""
+    """delete post."""
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
-    return redirect("/posts")
+    return redirect("/users")
+    
 
 @app.route("/posts/<int:post_id>/edit")
 def edit():
