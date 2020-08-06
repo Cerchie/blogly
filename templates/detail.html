@@ -18,14 +18,22 @@
 <p><a href="/{{user.id}}/edit">Edit User</a></p>
 <p><a href="/{{user.id}}/delete">Delete User</a></p>
 
-<form id="form1" method="get" action="/posts/{{user.id}}">
+<form id="form1" method="POST">
     <p>
-        <h2>Posts</h2>
+        <h1>Blogly Recent Posts</h1>
+
         {% for post in posts %}
-        <li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
+        <h2 class="mt-4">
+            <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+        </h2>
+        <p>{{ post.content }}</p>
+        <p>
+            <small>By {{ post.user.full_name }}</small>
+        </p>
         {% endfor %}
-        <button type="submit">add post</button>
+
 </form>
+<a href="/{{user.id}}/posts/new">add post</a>
 <a href="/users">Go back</a>
 </p>
 

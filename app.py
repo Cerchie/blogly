@@ -150,18 +150,18 @@ def delete_post(post_id):
     
 
 @app.route("/posts/<int:post_id>/edit")
-def edit():
+def edit(post_id):
+        post = Post.query.get_or_404(post_id)
         """Show form to edit a post, and to cancel (back to user page)."""
-        return render_template("edit-post.html")
+        return render_template("edit-post.html", post_id=post_id)
 
 @app.route("/posts/<int:post_id>/edit", methods=["POST"])
-def edit_form():
+def edit_form(post_id):
     """Handle editing of a post. Redirect back to the post view."""
     post = Post.query.get_or_404(post_id)
-    title = request.form('title')
-    content = request.form('content')
+    post.title = request.form['title']
+    post.content = request.form['content']
     db.session.add(post)
-    db.session.add(title)
-    db.session.add(content)
     db.session.commit()
-    return redirect("/posts")
+    return redirect("/users")
+

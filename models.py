@@ -40,6 +40,8 @@ class Post (db.Model):
     def __repr__(self):
         p = self
         return f"<Post id = {p.id} titlee= {p.title} content= {p.content} created_at= {p.created_at} user_id={p.user_id}>"
+
+        
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
