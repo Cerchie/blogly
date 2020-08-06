@@ -7,6 +7,17 @@
     <p>Title <input name="title"></p>
     <p>Content: <input name="content"></p>
     <input type="submit">
+
+    <div class="form-check">
+        {% for tag in tags %}
+        <div>
+            <input class="form-check-input" type="checkbox" value="{{ tag.id }}" id="tag_{{ tag.id }}" name="tags">
+            <label class="form-check-label" for="tag_{{ tag.id }}">
+                {{ tag.name }}
+            </label>
+        </div>
+        {% endfor %}
+    </div>
 </form>
 <a href="/users">Cancel</a>
 <button type="submit"></button>

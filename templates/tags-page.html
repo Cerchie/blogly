@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for tag in tags %}
-<h2 class="mt-4">
-    <a href="/tag/{{ tag.id }}">{{ tag.name }}</a>
-</h2>
-{% endfor %}
+<h1>Tags</h1>
+
+<ul>
+    {% for tag in tags %}
+    <li><a href="/tags/{{ tag.id }}">{{ tag.name }}</a></li>
+    {% endfor %}
+</ul>
+
+<p><a class="btn btn-primary" href="/tags/new">Add Tag</a></p>
 {% endblock %}

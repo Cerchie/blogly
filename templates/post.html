@@ -5,4 +5,12 @@ Title {{post.title}}
 Content {{post.content}}
 <p><a href="/posts/{{post.id}}/delete">Delete Post</a></p>
 <p><a href="/posts/{{post.id}}/edit">Edit Post</a></p>
+{% if post.tags %}
+<p>
+    <b>Tags:</b>
+    {% for tag in post.tags %}
+    <a href="/tags/{{ tag.id }}"><i>{{ tag.name }}</i></a>
+    {% endfor %}
+</p>
+{% endif %}
 {% endblock %}
