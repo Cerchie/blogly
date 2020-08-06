@@ -19,6 +19,9 @@ connect_db(app)
 db.create_all()
 
 
+#________________________________________-
+# USER ROUTES
+#_________________________________________
 @app.route("/", methods=['GET'])
 def rd():
     """redirect to user page"""
@@ -104,19 +107,9 @@ def show_form(user_id):
     user = User.query.get_or_404(user_id)
     return render_template("new-post.html", user=user)
 
-# @app.route("/<int:user_id>/posts/new", methods=["POST"])
-# def add_post(user_id):
-#     """Handle add form; add post and redirect to the user detail page"""
-#     user = User.query.get_or_404(user_id)
-#     post = Post(
-#         title=request.form['title'] or None,
-#         content=request.form['content'],
-#         user_id=user_id)
-       
-#     db.session.add(post)
-#     db.session.commit()
-
-#     return render_template("detail.html", user=user, title=title)
+#________________________________________-
+# POST ROUTES
+#_________________________________________
 
 @app.route('/<int:user_id>/posts/new', methods=["POST"])
 def posts_new(user_id):
@@ -164,4 +157,44 @@ def edit_form(post_id):
     db.session.add(post)
     db.session.commit()
     return redirect("/users")
+#________________________________________-
+# TAG ROUTES
+#_________________________________________
+
+@app.route("/tags")
+def show_tags_page():
+    """shows tags page"""
+    return render_template("tags-page.html")
+
+# @app.route("/tags/<int:tag_id>")
+# def ():
+
+# @app.route("tags/new")
+# def ():
+
+# @app.route("tags/new", methods=["POST"])
+# def ():
+
+# @app.route("/tags/<int:tag_id>/edit")
+# def ():
+
+# @app.route("/tags/<int:tag_id>/edit", methods=["POST"])
+# def ():
+
+# @app.route("/tags/<int:tag_id>/delete")
+# def ():
+
+#TODO WRITE RETURNS AND MAKE HTML FORMS
+#TODO GO BACK THROUGH ROUTES AND MAKE SURE THEY WORK
+
+
+
+
+
+
+
+
+
+
+
 
