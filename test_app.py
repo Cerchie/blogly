@@ -38,11 +38,11 @@ class UserViewsTestCase(TestCase):
 
     def test_list_users(self):
         with app.test_client() as client:
-            resp = client.get("/")
+            resp = client.get("/user")
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 302)
-            self.assertIn('Users', html)
+            self.assertIn('users', html)
 
     def test_delete(self):
         with app.test_client() as client:
@@ -66,3 +66,39 @@ class UserViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
+
+class PostViewsTestCase(TestCase):
+    """Tests for views for Users."""
+
+    def setUp(self):
+        """Add sample post."""
+
+        Post.query.delete()
+
+        post = Post(title="Hello", content="World")
+        db.session.add(post)
+        db.session.commit()
+
+        self.user_id = user.id
+
+    def tearDown(self):
+        """Clean up any fouled transaction."""
+
+    def test_show_post(self):
+        with app.test_client() as client:
+            resp = client.get("/posts/<int:post_id>")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("post", html)
+
+    def test_delete_page(self):
+        with app.test_client() as client:
+            resp = client.get("/posts/<int:post_id>/delete")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("delete", html)
+            
+
+    
