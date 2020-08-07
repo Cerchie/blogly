@@ -151,7 +151,7 @@ def edit(post_id):
         post = Post.query.get_or_404(post_id)
         """Show form to edit a post, and to cancel (back to user page)."""
         tags = Tag.query.all()
-        return render_template("edit-post.html", post_id=post_id, tags = tags)
+        return render_template("edit-post.html", post_id=post_id, tags = tags, post=post)
 
 @app.route("/posts/<int:post_id>/edit", methods=["POST"])
 def edit_form(post_id):
